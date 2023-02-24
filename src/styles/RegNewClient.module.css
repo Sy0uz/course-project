@@ -1,0 +1,15 @@
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.btnBox {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: end;
+}
+
+.list {
+    font-size: 0.6rem;
+}

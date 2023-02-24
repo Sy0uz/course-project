@@ -1,0 +1,11 @@
+.name {
+    margin-bottom: -6px;
+}
+
+.wrapper {
+    padding-top: 1rem;
+}
+
+.wrapper + .wrapper {
+    border-top: 1px dashed rgb(230, 230, 230);
+}
