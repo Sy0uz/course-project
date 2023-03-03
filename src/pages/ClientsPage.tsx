@@ -7,6 +7,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { ChangeQueryAC } from '../store/reducers/clientsReducer';
 import { ClearTreeAC } from '../store/reducers/mainReducer';
+import Wrapper from '../UI/Wrapper/Wrapper';
 
 const ClientsPage:FC = () => {
 
@@ -31,7 +32,7 @@ const ClientsPage:FC = () => {
     }, [ClientsQuery, ClientsTree, ClientsTree?.treeLists])
 
     return (
-        <div>
+        <Wrapper>
             <div className={s.header}>
                 <Typography.Title level={2}>Клиенты</Typography.Title>
                 <Button danger onClick={handler}>Удалить данные</Button>             
@@ -43,7 +44,7 @@ const ClientsPage:FC = () => {
                 ? <ClientList list={list} value={ClientsQuery} onChange={(str:string) => {setQuery(str)}}/>
                 : <div>Список клиентов пуст!</div>
             }
-        </div>
+        </Wrapper>
     )
 }
 

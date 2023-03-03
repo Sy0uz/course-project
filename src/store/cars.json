@@ -1,0 +1,9 @@
+[
+    {"registrationNumber": "А123ХА-10", "brand": "lamborghini", "color": "Белый", "year": "2012", "isAvailable": true},
+    {"registrationNumber": "В312КМ-10", "brand": "lada", "color": "Красный", "year": "1999", "isAvailable": true},
+    {"registrationNumber": "Е123ОР-10", "brand": "ferrari", "color": "Зеленый", "year": "2005", "isAvailable": false},
+    {"registrationNumber": "К543ВЕ-10", "brand": "kia", "color": "Белый", "year": "2003", "isAvailable": false},
+    {"registrationNumber": "М137НО-10", "brand": "Mercedez-Benz", "color": "Белый", "year": "2003", "isAvailable": true},
+    {"registrationNumber": "Н173ТУ-10", "brand": "subaru", "color": "Фиолетовый", "year": "1980", "isAvailable": false},
+    {"registrationNumber": "О693РС-10", "brand": "BMW", "color": "Белый", "year": "1990", "isAvailable": true}
+]

@@ -1,16 +1,26 @@
 import { Divider } from 'antd'
 import {FC} from 'react'
+import AddNewCar from '../components/AddNewCar/AddNewCar'
+import FindCar from '../components/FindCar'
 import FindClient from '../components/FindClient'
-import RegNewClient from '../components/RegNewClient'
+import RegNewClient from '../components/RegNewClient/RegNewClient'
+import Wrapper from '../UI/Wrapper/Wrapper'
 
 const HomePage:FC = () => {
+
     return (
         <div>
-            <RegNewClient/>
+            <Wrapper>
+                <RegNewClient/>
+                <Divider style={{margin: '1rem 0'}}/>
+                <FindClient/>
+            </Wrapper>
 
-            <Divider style={{margin: '1rem 0'}}/>
-            
-            <FindClient/>
+            <Wrapper>
+                <AddNewCar/>
+                <Divider style={{margin: '1rem 0'}}/>
+                <FindCar/>
+            </Wrapper>
         </div>
     )
 }

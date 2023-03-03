@@ -49,51 +49,46 @@ const FindClient:FC = () => {
             <Typography.Title level={3}>Найти клиента</Typography.Title>
 
             <Typography.Paragraph>
-                Номер водительского удостоверения – строка формата «RR AA NNNNNN»,
+                Номер водительского удостоверения – строка формата «RR AA NNNNNN»
 
                 <ul className={s.list}>
                     <li>RR – код региона (цифры);</li>
                     <li>AA – серия (буквы из следующего множества: А, В, Е, К, М, Н, О, Р, С, Т, У, Х);</li>
-                    <li>NNNNNN –порядковый номер удостоверения (цифры)</li>
+                    <li>NNNNNN – порядковый номер удостоверения (цифры)</li>
                 </ul>
 
                 Код, серия и номер отделяются друг от друга пробелами;
             </Typography.Paragraph>
 
-            <Input suffix={valid ? <CheckOutlined/> : null} value={query} onChange={(e) => {setQuery(e.target.value)}} placeholder='Номер водительского удостоверения...' maxLength={12} showCount allowClear/>
+            <Input suffix={valid ? <CheckOutlined/> : <></>} value={query} onChange={(e) => {setQuery(e.target.value)}} placeholder='Номер водительского удостоверения...' maxLength={12} showCount allowClear/>
 
             <div className={s.btnBox}>
                 <Button disabled={!valid} onClick={handler} type='primary'>Найти</Button>
             </div>
 
-            {
-                visible
-                ? 
-                <Modal
-                    title={
-                        <div>
-                            <div>Поиск клиента</div>
-                            <Divider/>
-                        </div>
-                    }
-                    open={visible}
-                    centered
-                    onCancel={onClose}
-                    onOk={onConfirm}
-                    width={800}
-                    footer={
-                        <>
+
+            <Modal
+                title={
+                    <div>
+                        <div>Поиск клиента</div>
+                        <Divider />
+                    </div>
+                }
+                open={visible}
+                centered
+                onCancel={onClose}
+                onOk={onConfirm}
+                width={800}
+                footer={
+                    <>
                         <Button onClick={onDelete} danger>Удалить</Button>
                         <Button onClick={onClose}>Отмена</Button>
                         <Button onClick={onConfirm} type='primary'>Ок</Button>
-                        </>
-                    }
-                >
-                    <FindedClient client={findedClient}/>
-                </Modal>
-                : 
-                <></>
-            }
+                    </>
+                }
+            >
+                <FindedClient client={findedClient} />
+            </Modal>
         </div>
     )
 }

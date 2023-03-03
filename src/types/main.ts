@@ -1,4 +1,4 @@
-import { BinarySearchTree } from "../store/clientsTree";
+import { BinarySearchTree } from "../structures/clientsTree";
 import { IClient } from "./types";
 
 export enum MainActionTypes {
@@ -11,12 +11,16 @@ export enum MainActionTypes {
 
 export interface MainState {
     ClientsTree: BinarySearchTree | null;
+    addedKeys: string[];
     findedClient: IClient | null;
 }
 
 interface CreateTreeAction {
     type: MainActionTypes.CREATE_TREE;
-    payload: BinarySearchTree;
+    payload: {
+        tree: BinarySearchTree,
+        keys: string[],
+    },
 }
 
 interface InsertClientAction {
@@ -38,4 +42,8 @@ interface ClearTreeAction {
     type: MainActionTypes.CLEAR_TREE;
 }
 
-export type MainAction = CreateTreeAction | InsertClientAction | FindClientAction | DeleteClientAction | ClearTreeAction;
+export type MainAction = CreateTreeAction 
+                        | InsertClientAction 
+                        | FindClientAction 
+                        | DeleteClientAction 
+                        | ClearTreeAction;

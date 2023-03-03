@@ -1,8 +1,8 @@
 export interface regClientState {
-    driverLicenceNumber: {value: string, valid: boolean}
-    fullName: {value: string, valid: boolean}
-    passportData: {value: string, valid: boolean}
-    address: {value: string, valid: boolean}
+    driverLicenceNumber: {value: string, valid: boolean};
+    fullName: {value: string, valid: boolean};
+    passportData: {value: string, valid: boolean};
+    address: {value: string, valid: boolean};
 }
 
 export enum RegClientActionTypes {
@@ -18,47 +18,55 @@ export enum RegClientActionTypes {
 }
 
 interface ChangeLicenceAction {
-    type: RegClientActionTypes.CHANGE_LICENCE,
-    payload: string,
+    type: RegClientActionTypes.CHANGE_LICENCE;
+    payload: string;
 }
 
 interface ChangeFullnameAction {
-    type: RegClientActionTypes.CHANGE_FULLNAME,
-    payload: string,
+    type: RegClientActionTypes.CHANGE_FULLNAME;
+    payload: string;
 }
 
 interface ChangePassportAction {
-    type: RegClientActionTypes.CHANGE_PASSPORT,
-    payload: string,
+    type: RegClientActionTypes.CHANGE_PASSPORT;
+    payload: string;
 }
 
 interface ChangeAddressAction {
-    type: RegClientActionTypes.CHANGE_ADDRESS,
-    payload: string,
+    type: RegClientActionTypes.CHANGE_ADDRESS;
+    payload: string;
 }
 
 interface ChangeLicenceValidAction {
-    type: RegClientActionTypes.CHANGE_LICENCE_VALID,
-    payload: boolean,
+    type: RegClientActionTypes.CHANGE_LICENCE_VALID;
+    payload: boolean;
 }
 
 interface ChangeFullnameValidAction {
-    type: RegClientActionTypes.CHANGE_FULLNAME_VALID,
-    payload: boolean,
+    type: RegClientActionTypes.CHANGE_FULLNAME_VALID;
+    payload: boolean;
 }
 
 interface ChangePassportValidAction {
-    type: RegClientActionTypes.CHANGE_PASSPORT_VALID,
-    payload: boolean,
+    type: RegClientActionTypes.CHANGE_PASSPORT_VALID;
+    payload: boolean;
 }
 
 interface ChangeAddressValidAction {
-    type: RegClientActionTypes.CHANGE_ADDRESS_VALID,
-    payload: boolean,
+    type: RegClientActionTypes.CHANGE_ADDRESS_VALID;
+    payload: boolean;
 }
 
 interface ClearClientAction {
-    type: RegClientActionTypes.CLEAR_CLIENT,
+    type: RegClientActionTypes.CLEAR_CLIENT;
 }
 
-export type regAction = ChangeAddressAction | ChangeFullnameAction | ChangePassportAction | ChangeLicenceAction | ClearClientAction | ChangeLicenceValidAction | ChangeFullnameValidAction | ChangePassportValidAction | ChangeAddressValidAction;
+export type RegAction = ChangeAddressAction 
+                    | ChangeFullnameAction 
+                    | ChangePassportAction 
+                    | ChangeLicenceAction 
+                    | ClearClientAction 
+                    | ChangeLicenceValidAction 
+                    | ChangeFullnameValidAction 
+                    | ChangePassportValidAction 
+                    | ChangeAddressValidAction;

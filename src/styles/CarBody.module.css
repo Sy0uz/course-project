@@ -1,0 +1,20 @@
+.main {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.desc {
+    margin-top: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btns {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}

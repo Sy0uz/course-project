@@ -24,6 +24,7 @@ const FindedClient:FC<FindedClientProps> = ({client}) => {
             <Descriptions.Item label='Номер водительского удостоверения'>{client.driverLicenceNumber}</Descriptions.Item>
             <Descriptions.Item label='Адрес'>{client.address}</Descriptions.Item>
             <Descriptions.Item label='Паспортные данные'>{client.passportData}</Descriptions.Item>
+            <Descriptions.Item label='Автомобиль в аренде'>Отсутствует</Descriptions.Item>
         </Descriptions>
     )
 }
