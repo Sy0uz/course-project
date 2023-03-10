@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { Input, Tooltip } from 'antd'
 import { CheckOutlined, InfoCircleOutlined } from '@ant-design/icons'
 import s from './../../styles/AddNewCar.module.css'

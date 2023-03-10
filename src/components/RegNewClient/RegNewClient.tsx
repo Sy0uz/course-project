@@ -1,5 +1,5 @@
 import { Button, Typography } from 'antd'
-import { FC, useEffect, useMemo } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { InsertClientAC } from '../../store/reducers/mainReducer'
 import s from './../../styles/RegNewClient.module.css'
@@ -9,10 +9,14 @@ import { IClient } from '../../types/types'
 import { IsLicence } from '../../utils/regexpLicence'
 import { IsPassport } from '../../utils/regexpPassport'
 import RegForm from './RegForm'
+import { IsLetters } from '../../utils/regexpLetters'
+import ModalError from '../ModalError'
 
 const RegNewClient:FC = () => {
 
     const dispatch = useDispatch();
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const {addedKeys} = useTypedSelector(state => state.main);
 
@@ -25,32 +29,31 @@ const RegNewClient:FC = () => {
             passportData: passportData.value,
             address: address.value,
         }
-        if (!addedKeys.includes(newClient.driverLicenceNumber))
-            dispatch(InsertClientAC(newClient));
+        if (addedKeys.includes(newClient.driverLicenceNumber)) {
+            setModalOpen(true);
+            return;
+        }
+
+        dispatch(InsertClientAC(newClient));
         dispatch(ClearRegClientAC());            
     }
 
     const checkValid = ():void => {
-        if (fullName.value.length > 5)
-            dispatch(ChangeRegFullnameValidAC(true));
-        else
-            dispatch(ChangeRegFullnameValidAC(false));
+        IsLetters(fullName.value) && fullName.value.length > 3
+                              ? dispatch(ChangeRegFullnameValidAC(true))
+                              : dispatch(ChangeRegFullnameValidAC(false))
 
-        if (IsPassport(passportData.value))
-            dispatch(ChangeRegPassportValidAC(true));
-        else
-            dispatch(ChangeRegPassportValidAC(false));
+        IsPassport(passportData.value)
+                              ? dispatch(ChangeRegPassportValidAC(true))
+                              : dispatch(ChangeRegPassportValidAC(false))
 
-        if (address.value.length > 5)
-            dispatch(ChangeRegAddressValidAC(true));
-        else
-            dispatch(ChangeRegAddressValidAC(false))
-
-        if (IsLicence(driverLicenceNumber.value))
-            dispatch(ChangeRegLicenceValidAC(true))
-        else {
-            dispatch(ChangeRegLicenceValidAC(false))
-        }
+        address.value.length > 5
+                              ? dispatch(ChangeRegAddressValidAC(true))
+                              : dispatch(ChangeRegAddressValidAC(false))
+            
+        IsLicence(driverLicenceNumber.value)
+                              ? dispatch(ChangeRegLicenceValidAC(true))
+                              : dispatch(ChangeRegLicenceValidAC(false))
     }
 
     const valid = useMemo(() => {
@@ -70,6 +73,8 @@ const RegNewClient:FC = () => {
             <div className={s.btnBox}>
                 <Button onClick={handler} type='primary' disabled={!valid}>Зарегистрировать</Button>
             </div>
+
+            <ModalError open={modalOpen} onOk={() => {setModalOpen(false)}} body='Клиент с данным номером существует!'/>
         </div>
     )
 }

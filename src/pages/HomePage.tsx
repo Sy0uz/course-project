@@ -1,5 +1,5 @@
 import { Divider } from 'antd'
-import {FC} from 'react'
+import { FC } from 'react'
 import AddNewCar from '../components/AddNewCar/AddNewCar'
 import FindCar from '../components/FindCar'
 import FindClient from '../components/FindClient'

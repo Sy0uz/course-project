@@ -3,7 +3,9 @@
 }
 
 .wrapper {
-    padding-top: 1rem;
+    padding: 1rem;
+    border: 1px solid rgb(231, 231, 231);
+    margin-top: 1rem;
 }
 
 .wrapper + .wrapper {

@@ -1,13 +1,15 @@
-import { Descriptions, Typography } from 'antd'
-import {FC} from 'react'
-import { IClient } from '../types/types'
+import { Descriptions, Divider, Typography, Button } from 'antd'
+import { FC } from 'react'
+import { IClient, IRent } from '../types/types'
 import s from './../styles/FindedClient.module.css'
 
 interface FindedClientProps {
-    client: IClient | null,
+    client: IClient | null;
+    rentedCars: IRent[];
+    unrentCar: (registrationNumber: string) => void;
 }
 
-const FindedClient:FC<FindedClientProps> = ({client}) => {
+const FindedClient:FC<FindedClientProps> = ({client, rentedCars, unrentCar}) => {
 
     if (!client) 
         return (
@@ -19,13 +21,39 @@ const FindedClient:FC<FindedClientProps> = ({client}) => {
         )
 
     return (
-        <Descriptions labelStyle={{ width: '40%' }} column={1} bordered>
-            <Descriptions.Item label='ФИО'>{client.fullName}</Descriptions.Item>
-            <Descriptions.Item label='Номер водительского удостоверения'>{client.driverLicenceNumber}</Descriptions.Item>
-            <Descriptions.Item label='Адрес'>{client.address}</Descriptions.Item>
-            <Descriptions.Item label='Паспортные данные'>{client.passportData}</Descriptions.Item>
-            <Descriptions.Item label='Автомобиль в аренде'>Отсутствует</Descriptions.Item>
-        </Descriptions>
+        <>
+            <Divider/>
+            <Descriptions labelStyle={{ width: '30%' }} column={1} bordered>
+                <Descriptions.Item label='ФИО'>{client.fullName}</Descriptions.Item>
+                <Descriptions.Item label='Номер водительского удостоверения'>{client.driverLicenceNumber}</Descriptions.Item>
+                <Descriptions.Item label='Адрес'>{client.address}</Descriptions.Item>
+                <Descriptions.Item label='Паспортные данные'>{client.passportData}</Descriptions.Item>
+            </Descriptions>
+
+            {
+                rentedCars.length
+                ?
+                <>
+                    <Divider/>
+                    <Descriptions title='Арендованные автомобили' labelStyle={{width: '20%'}} column={1} bordered>
+                        {
+                            rentedCars.map((car) => <Descriptions.Item key={car.registrationNumber} label={car.registrationNumber}>
+                                <div className={s.rentData}>
+                                    <span>
+                                        {car.rentDate} - {car.returnDate}
+                                    </span>
+                                    <Button type='dashed' onClick={() => unrentCar(car.registrationNumber)}>Вернуть</Button>
+                                </div>
+                                
+                            </Descriptions.Item>)
+                        }
+                    </Descriptions>
+                </>
+                : 
+                <></>        
+            }
+
+        </>
     )
 }
 

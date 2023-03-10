@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from 'react'
 import { ICar } from '../types/types'
-import { Input } from 'antd';
+import { Input, Row, Typography } from 'antd';
 import CarItem from './CarItem';
 
 interface CarListProps {
@@ -19,7 +19,11 @@ const CarList:FC<CarListProps> = ({list, value, onChange}) => {
         <div>
             <Input value={value} onChange={handler} placeholder='Найти автомобиль...'/>
             <div>
-                {list.map(i => <CarItem key={i?.registrationNumber} car={i} />)}
+                {
+                    list.length
+                    ? list.map(i => <CarItem key={i?.registrationNumber} car={i} />)
+                    : <Row justify='center' style={{marginTop:'2rem'}}><Typography.Title level={3}>Список пуст!</Typography.Title></Row>
+                }
             </div>
         </div>
     )

@@ -17,4 +17,19 @@
     margin-top: 1rem;
     display: flex;
     justify-content: center;
+    gap: 1rem;
+}
+
+.rentElem {
+    display: flex;
+    align-items: center;
+}
+
+.ownerItem > span {
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.ownerItem + .ownerItem {
+    margin-left: 8px;
 }

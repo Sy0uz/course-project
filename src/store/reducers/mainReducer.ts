@@ -11,20 +11,22 @@ const initialState: MainState = {
 export const mainReducer = (state = initialState, action: MainAction): MainState => {
     switch (action.type) {
         case MainActionTypes.CREATE_TREE: 
-            return {...state, ClientsTree: action.payload.tree, addedKeys: action.payload.keys}
+            return {...state, ClientsTree: action.payload.tree, addedKeys: action.payload.keys};
         case MainActionTypes.INSERT_CLIENT:
             state.ClientsTree?.insert(action.payload);
             state.ClientsTree?.detour();
             return {...state, addedKeys: [...state.addedKeys, action.payload.driverLicenceNumber]};
         case MainActionTypes.FIND_CLIENT:
             const client = state.ClientsTree ? state.ClientsTree.FindSingle(action.payload) : null;
-            return {...state, findedClient: client}
+            return {...state, findedClient: client};
         case MainActionTypes.DELETE_CLIENT:
             state.ClientsTree?.delete(action.payload);
             return {...state, findedClient: null, addedKeys: state.addedKeys.filter((i) => i !== action.payload)};
         case MainActionTypes.CLEAR_TREE:
             state.ClientsTree?.clearTree();
-            return {...state, findedClient: null, addedKeys: []}
+            return {...state, findedClient: null, addedKeys: []};
+        case MainActionTypes.CLEAR_FINDED_CLIENT:
+            return {...state, findedClient: null};
         default:
             return state;
     }
@@ -47,4 +49,5 @@ export const CreateTreeAC = ():MainAction => {
 export const InsertClientAC = (payload:IClient):MainAction => ({type:MainActionTypes.INSERT_CLIENT, payload});
 export const FindClientAC = (payload: string):MainAction => ({type:MainActionTypes.FIND_CLIENT, payload});
 export const DeleteClientAC = (payload: string):MainAction => ({type:MainActionTypes.DELETE_CLIENT, payload})
+export const ClearFindedClientAC = ():MainAction => ({type:MainActionTypes.CLEAR_FINDED_CLIENT})
 export const ClearTreeAC = ():MainAction => ({type:MainActionTypes.CLEAR_TREE})

@@ -6,6 +6,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
 import { ChangeCarQueryAC, ClearHashAC } from '../store/reducers/carsReducer';
 import Wrapper from '../UI/Wrapper/Wrapper';
+import { ClearRentListAC } from '../store/reducers/rentReducer';
 
 const CarsPage:FC = () => {
 
@@ -15,6 +16,7 @@ const CarsPage:FC = () => {
 
     const handler = () => {
         dispatch(ClearHashAC());
+        dispatch(ClearRentListAC());
     }
 
     const list = useMemo(() => {
@@ -25,7 +27,7 @@ const CarsPage:FC = () => {
     }, [CarsQuery, HashCars, HashCars?.segments])
 
     return (
-        <Wrapper>
+        <Wrapper className='h100'>
             <div className={s.header}>
                 <Typography.Title level={2}>Автомобили</Typography.Title>
                 <Button danger onClick={handler}>Удалить данные</Button>

@@ -148,6 +148,21 @@ export class HashCars {
         }
     }
 
+    FindSegment(key:string):Element | null {
+        let collision:number = 0;
+
+        while (true) {
+            let address:number = (this.HashFun(key) + collision * this.SecondHashFun(key)) % HashCars.size;
+            let segment:Element = this.segments[address];
+
+            if (segment.Key === key)
+                return segment;
+            if (segment.isEmpty || collision > this.maxCollision)
+                return null;
+            collision +=1;
+        }
+    }
+
     FindList(key:string):Array<ICar | null> {
 
         let arr:Array<ICar | null> = [];

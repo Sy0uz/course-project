@@ -4,6 +4,7 @@ import { carsReducer } from "./carsReducer";
 import { clientsReducer } from "./clientsReducer";
 import { mainReducer } from "./mainReducer";
 import { regClientReducer } from "./regClientReducer";
+import { rentReducer } from "./rentReducer";
 
 export const rootReducer = combineReducers({
     main: mainReducer,
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
     regClient: regClientReducer,
     cars: carsReducer,
     addCar: addCarReducer,
+    rent: rentReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

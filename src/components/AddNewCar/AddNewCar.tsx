@@ -1,18 +1,22 @@
 import { Button, Typography } from 'antd'
-import { FC, useEffect, useMemo } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { ChangeAddBrandValidAC, ChangeAddColorValidAC, ChangeAddNumberValidAC, ChangeAddYearValidAC, ClearAddCarAC } from '../../store/reducers/addCarReducer'
 import { InsertCarAC } from '../../store/reducers/carsReducer'
 import { ICar } from '../../types/types'
 import { IsRegNumber } from '../../utils/regexpCarNumber'
+import { IsLetters } from '../../utils/regexpLetters'
 import { IsYear } from '../../utils/regexpYear'
+import ModalError from '../ModalError'
 import s from './../../styles/AddNewCar.module.css'
 import AddCarForm from './AddCarForm'
 
 const AddNewCar:FC = () => {
 
     const dispatch = useDispatch();
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const { addedCars } = useTypedSelector(state => state.cars)
 
@@ -27,7 +31,7 @@ const AddNewCar:FC = () => {
                             ? dispatch(ChangeAddBrandValidAC(true))                     
                             : dispatch(ChangeAddBrandValidAC(false))
 
-        color.value.length > 3 
+        IsLetters(color.value) && color.value.length > 3
                             ? dispatch(ChangeAddColorValidAC(true))
                             : dispatch(ChangeAddColorValidAC(false))
         
@@ -53,8 +57,11 @@ const AddNewCar:FC = () => {
             isAvailable: true,
         }
 
-        if (!addedCars.includes(car.registrationNumber))
-            dispatch(InsertCarAC(car));
+        if (addedCars.includes(car.registrationNumber)) {
+            setModalOpen(true)
+            return;
+        }
+        dispatch(InsertCarAC(car));
         dispatch(ClearAddCarAC());
     }
 
@@ -67,6 +74,8 @@ const AddNewCar:FC = () => {
             <div className={s.btnBox}>
                 <Button onClick={handler} type='primary' disabled={!valid}>Добавить</Button>
             </div>
+
+            <ModalError open={modalOpen} onOk={() => setModalOpen(false)} body='Автомобиль с таким номером существует!'/>
         </div>
     )
 }

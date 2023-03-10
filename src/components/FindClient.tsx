@@ -1,6 +1,6 @@
-import { Button, Divider, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { Typography, Input } from 'antd';
-import { FC, useState, useEffect } from 'react'
+import { FC, useState, useMemo, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { DeleteClientAC, FindClientAC } from '../store/reducers/mainReducer';
@@ -8,40 +8,64 @@ import { IsLicence } from '../utils/regexpLicence';
 import s from './../styles/FindClient.module.css'
 import FindedClient from './FindedClient';
 import { CheckOutlined } from '@ant-design/icons'
+import { IRent } from '../types/types';
+import { RemoveRentDataAC } from '../store/reducers/rentReducer';
+import { ChangeCarAvaliableAC } from '../store/reducers/carsReducer';
 
 const FindClient:FC = () => {
 
     const dispatch = useDispatch();
+
     const {findedClient} = useTypedSelector(state => state.main);
+    const {LinkedList} = useTypedSelector(state => state.rent);
 
     const [visible, setVisible] = useState<boolean>(false);
     const [query, setQuery] = useState<string>('');
-    const [valid, setValid] = useState<boolean>(false);
+    const [rentedCars, setRentedCars] = useState<IRent[]>([]);
 
-    useEffect(() => {
-        setValid(IsLicence(query));
+    const valid = useMemo(() => {
+        return IsLicence(query);
     }, [query])
 
-    const handler = () => {
+    useEffect(() => {
+        if (findedClient && LinkedList) {
+            let rentedCarsResult:IRent[] = LinkedList.FindClientRent(findedClient.driverLicenceNumber);
+            if (rentedCarsResult.length)
+                setRentedCars(rentedCarsResult);
+        }
+    }, [findedClient])
+
+    const handler = ():void => {
         dispatch(FindClientAC(query));
         setVisible(true);
     }
 
-    const onClose = () => {
+    const onClose = ():void => {
         setVisible(false);
     }
 
-    const onConfirm = () => {
+    const onConfirm = ():void => {
         setVisible(false);
         setQuery('');
     }
 
-    const onDelete = () => {
+    const onDelete = ():void => {
         if (findedClient)
             dispatch(DeleteClientAC(findedClient?.driverLicenceNumber))
+        if (rentedCars.length)
+            for (const iterator of rentedCars) {
+                dispatch(RemoveRentDataAC(iterator.registrationNumber));
+                dispatch(ChangeCarAvaliableAC(iterator.registrationNumber, true));
+            }
         setVisible(false);
         setQuery('');
         alert("Клиент удалён!")
+    }
+
+    const unrentCar = (registrationNumber:string):void => {
+        dispatch(RemoveRentDataAC(registrationNumber));
+        dispatch(ChangeCarAvaliableAC(registrationNumber, true));
+        setRentedCars(rentedCars.filter((car) => car.registrationNumber !== registrationNumber));
     }
 
     return (
@@ -68,26 +92,28 @@ const FindClient:FC = () => {
 
 
             <Modal
-                title={
-                    <div>
-                        <div>Поиск клиента</div>
-                        <Divider />
-                    </div>
-                }
+                title='Поиск клиента'
                 open={visible}
                 centered
                 onCancel={onClose}
                 onOk={onConfirm}
                 width={800}
                 footer={
+                    findedClient
+                    ?
                     <>
                         <Button onClick={onDelete} danger>Удалить</Button>
                         <Button onClick={onClose}>Отмена</Button>
                         <Button onClick={onConfirm} type='primary'>Ок</Button>
                     </>
+                    :
+                    <>
+                            <Button onClick={onClose}>Отмена</Button>
+                            <Button onClick={onConfirm} type='primary'>Ок</Button>
+                    </>
                 }
             >
-                <FindedClient client={findedClient} />
+                <FindedClient client={findedClient} rentedCars={rentedCars} unrentCar={unrentCar}/>
             </Modal>
         </div>
     )

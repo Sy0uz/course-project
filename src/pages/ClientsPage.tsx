@@ -8,11 +8,14 @@ import { useDispatch } from 'react-redux';
 import { ChangeQueryAC } from '../store/reducers/clientsReducer';
 import { ClearTreeAC } from '../store/reducers/mainReducer';
 import Wrapper from '../UI/Wrapper/Wrapper';
+import { ClearRentListAC } from '../store/reducers/rentReducer';
+import { ChangeCarAvaliableAC } from '../store/reducers/carsReducer';
 
 const ClientsPage:FC = () => {
 
-    const { ClientsTree } = useTypedSelector(state => state.main)
-    const { ClientsQuery } = useTypedSelector(state => state.clients)
+    const { ClientsTree } = useTypedSelector(state => state.main);
+    const { ClientsQuery } = useTypedSelector(state => state.clients);
+    const { HashCars } = useTypedSelector(state => state.cars);
 
     const dispatch = useDispatch();
 
@@ -20,6 +23,11 @@ const ClientsPage:FC = () => {
 
     const handler = ():void => {
         dispatch(ClearTreeAC());
+        dispatch(ClearRentListAC());
+        if (HashCars)
+            for (const iterator of HashCars?.GetArray()) {
+                iterator && dispatch(ChangeCarAvaliableAC(iterator.registrationNumber, true));
+            }
     }
 
     const list:IClient[] = useMemo(() => {
@@ -32,7 +40,7 @@ const ClientsPage:FC = () => {
     }, [ClientsQuery, ClientsTree, ClientsTree?.treeLists])
 
     return (
-        <Wrapper>
+        <Wrapper className='h100'>
             <div className={s.header}>
                 <Typography.Title level={2}>Клиенты</Typography.Title>
                 <Button danger onClick={handler}>Удалить данные</Button>             
@@ -40,9 +48,7 @@ const ClientsPage:FC = () => {
 
             <Divider className={s.divider}/>
             {
-                ClientsTree
-                ? <ClientList list={list} value={ClientsQuery} onChange={(str:string) => {setQuery(str)}}/>
-                : <div>Список клиентов пуст!</div>
+                ClientsTree && <ClientList list={list} value={ClientsQuery} onChange={(str:string) => {setQuery(str)}}/>
             }
         </Wrapper>
     )

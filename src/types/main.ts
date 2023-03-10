@@ -5,6 +5,7 @@ export enum MainActionTypes {
     CREATE_TREE = "CREATE_TREE",
     INSERT_CLIENT = "INSERT_CLIENT",
     FIND_CLIENT = "FIND_CLIENT",
+    CLEAR_FINDED_CLIENT = "CLEAR_FINDED_CLIENT",
     DELETE_CLIENT = "DELETE_CLIENT",
     CLEAR_TREE = "CLEAR_TREE",
 }
@@ -42,8 +43,13 @@ interface ClearTreeAction {
     type: MainActionTypes.CLEAR_TREE;
 }
 
+interface ClearFindedClient {
+    type: MainActionTypes.CLEAR_FINDED_CLIENT;
+}
+
 export type MainAction = CreateTreeAction 
                         | InsertClientAction 
                         | FindClientAction 
                         | DeleteClientAction 
-                        | ClearTreeAction;
+                        | ClearTreeAction
+                        | ClearFindedClient;

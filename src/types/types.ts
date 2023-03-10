@@ -14,8 +14,8 @@ export interface ICar {
 }
 
 export interface IRent {
-    client: IClient;
+    driverLicenceNumber: string;
     registrationNumber: string;
-    issueDate: string;
+    rentDate: string;
     returnDate: string;
 }

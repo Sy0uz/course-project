@@ -1,6 +1,6 @@
-import {ChangeEvent, FC, useState} from 'react'
+import { ChangeEvent, FC } from 'react'
 import { IClient } from '../types/types'
-import {Input} from 'antd';
+import { Input, Typography, Row } from 'antd';
 import ClientItem from './ClientItem';
 
 interface ClientListProps {
@@ -19,7 +19,11 @@ const ClientList:FC<ClientListProps> = ({list, value, onChange}) => {
         <div>
             <Input value={value} onChange={handler} placeholder='Найти клиента...'/>
             <div>
-                {list.map((item) => <ClientItem key={item.passportData} client={item}/>)}
+                {
+                    list.length
+                    ? list.map((item) => <ClientItem key={item.passportData} client={item}/>)
+                    : <Row justify='center' style={{marginTop:'2rem'}}><Typography.Title level={3}>Список пуст!</Typography.Title></Row>
+                }
             </div>
         </div>
     )
